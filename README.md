@@ -1,3 +1,5 @@
+![sample-sheet](./images/screenshot1.png)
+
 # install
 Gogole Drive > create spread sheet > tools > script editor > paste main.js > save > run onOpen
 
