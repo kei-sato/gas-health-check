@@ -15,6 +15,11 @@ var GREEN1 = "#8ACE6B";
 var RED1 = "#F6898A";
 var GRAY1 = "#E0E0E0";
 
+function toBool(str) {
+  if (typeof str !== "string") return !!str;
+  return str.toLowerCase() !== "false";
+}
+
 function isEmptyObj(obj) {
   if (!obj) return true;
   if (typeof obj !== "object") return true;
@@ -193,7 +198,7 @@ function sendRequest(row, rowIndex, sheet) {
     headers: row.headers || undefined,
     method: row.method || undefined,
     payload: row.payload || undefined,
-    validateHttpsCertificate: row.validateHttpsCertificate !== false,
+    validateHttpsCertificate: toBool(row.validateHttpsCertificate),
     muteHttpExceptions: true
   };
   var expectResponse = parseJSON(row.expectResponse) || {};
