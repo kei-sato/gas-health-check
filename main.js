@@ -227,6 +227,8 @@ function sendRequest(row, rowIndex, sheet) {
 
   if (!url) return setStatus("URL NOT FOUND", rowIndex, sheet);
 
+  setLastChecked(rowIndex, sheet);
+
   var response;
   try {
     response = UrlFetchApp.fetch(url, params);
@@ -246,6 +248,30 @@ function sendRequest(row, rowIndex, sheet) {
 
   setStatus(status, rowIndex, failed, sheet);
   setBody(body, rowIndex, sheet);
+}
+
+function setCellWithColName(colName, value, rowIndex, sheet) {
+  var fields = getFields();
+
+  // find index of colName field
+  var colIndex = -1;
+  fields.forEach(function(el, i) { if (el.toLowerCase() === colName.toLowerCase()) colIndex = i; });
+
+  // create fields of colName if not exists
+  if (colIndex < 0) {
+    getCell(fields.length, 0, sheet).setValue(colName);
+    colIndex = fields.length;
+  }
+
+  // set value 
+  var cell = getCell(colIndex, rowIndex, sheet);
+  cell.setValue(value);
+  setColor(cell, { bgColor: GRAY1  });
+}
+
+function setLastChecked(rowIndex, sheet) {
+  var lastChecked = new Date();
+  setCellWithColName("lastChecked", lastChecked, rowIndex, sheet);
 }
 
 function setStatus(status, rowIndex, failed, sheet) {
@@ -272,22 +298,7 @@ function setBody(body, rowIndex, sheet) {
   body = body || "";
   body = body.slice(0, props.bodyLength || 1024);
 
-  var fields = getFields();
-
-  // find index of body field
-  var bodyIndex = -1;
-  fields.forEach(function(el, i) { if (el.toLowerCase() === "body") bodyIndex = i; });
-
-  // create fields of body if not exists
-  if (bodyIndex < 0) {
-    getCell(fields.length, 0, sheet).setValue("body");
-    bodyIndex = fields.length;
-  }
-
-  // set value 
-  var cell = getCell(bodyIndex, rowIndex, sheet);
-  cell.setValue(body);
-  setColor(cell, { bgColor: GRAY1  });
+  setCellWithColName("body", body, rowIndex, sheet);
 }
 
 // x, y start from 0 (means top cell's coordinate is (0,0))
