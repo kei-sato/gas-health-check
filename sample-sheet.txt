@@ -7,6 +7,7 @@ https://google.com	application/json; charset=utf-8		post	{"pseudo":"value"}	FALS
 health check list	make sure health check list was parsed					
 check right now	start checking according to the list					
 notification settings	such as Slack webhook url, or kind of					
+output settings	limit of response body					
 help	show helps					
 						
 # properties						

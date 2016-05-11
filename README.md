@@ -32,6 +32,7 @@ Tools > Script editor... > Resources > Current project's triggers > select healt
 |health check list|make sure health check list was parsed|
 |check right now|start checking according to the list|
 |notification settings|such as Slack webhook url, or kind of|
+|output settings|limit of response body|
 |help|show helps|
 
 # properties

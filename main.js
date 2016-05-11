@@ -10,6 +10,7 @@ google apps script
 
 var SLACK_WEBHOOK_URL = "SLACK_WEBHOOK_URL";
 var SLACK_CHANNEL = "SLACK_CHANNEL";
+var BODY_LEN = "BODY_LEN";
 
 var GREEN1 = "#8ACE6B";
 var RED1 = "#F6898A";
@@ -18,6 +19,12 @@ var GRAY1 = "#E0E0E0";
 function toBool(str) {
   if (typeof str !== "string") return !!str;
   return str.toLowerCase() !== "false";
+}
+
+function toNum(str) {
+  if (typeof str === "number") return str;
+  if (typeof str === "string") return Number(str);
+  return undefined;
 }
 
 function isEmptyObj(obj) {
@@ -57,13 +64,14 @@ function getProps() {
   dp = PropertiesService.getDocumentProperties();
   slackWebhookUrl = dp.getProperty(SLACK_WEBHOOK_URL);
   slackChannel = dp.getProperty(SLACK_CHANNEL);
-  if (!slackWebhookUrl) {
-    ss().toast("notification settings not found. see Custom Menu > notification settings");
-    return null;
-  }
+  bodyLength = dp.getProperty(BODY_LEN);
+
+  bodyLength = toNum(bodyLength);
+
   return {
     slackWebhookUrl: slackWebhookUrl,
-    slackChannel: slackChannel
+    slackChannel: slackChannel,
+    bodyLength: bodyLength
   };
 }
 
@@ -122,6 +130,9 @@ function onOpen() {
       name: 'notification settings',
       functionName: 'setDestination'
     }, {
+      name: 'output settings',
+      functionName: 'setOutputSettings'
+    }, {
       name: 'help',
       functionName: 'showHelp'
     }
@@ -152,6 +163,13 @@ function setDestination() {
   dp.setProperty(SLACK_CHANNEL, slackChannel);
 }
 
+function setOutputSettings() {
+  var dp = PropertiesService.getDocumentProperties();
+  var bodyLength = Browser.inputBox('Enter body limit length (default 1024)', Browser.Buttons.OK_CANCEL);
+
+  dp.setProperty(BODY_LEN, bodyLength);
+}
+
 function showHelp() {
   alert("https://github.com/kei-sato/gas-health-check");
 }
@@ -165,7 +183,10 @@ function sendMessageSlack(message) {
   var props = getProps() || {};
   var slackWebhookUrl = props.slackWebhookUrl;
   var slackChannel = props.slackChannel;
-  if (!slackWebhookUrl) return;
+  if (!slackWebhookUrl) {
+    ss().toast("notification settings not found. see Custom Menu > notification settings");
+    return;
+  }
 
   var payload = JSON.stringify({
     channel: slackChannel || undefined,
@@ -247,8 +268,9 @@ function setStatus(status, rowIndex, failed, sheet) {
 }
 
 function setBody(body, rowIndex, sheet) {
+  var props = getProps() || {};
   body = body || "";
-  body = body.slice(0, 1024);
+  body = body.slice(0, props.bodyLength || 1024);
 
   var fields = getFields();
 
