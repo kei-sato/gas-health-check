@@ -248,7 +248,7 @@ function setStatus(status, rowIndex, failed, sheet) {
 
 function setBody(body, rowIndex, sheet) {
   body = body || "";
-  body = body.slice(0, 32);
+  body = body.slice(0, 1024);
 
   var fields = getFields();
 
