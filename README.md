@@ -4,6 +4,20 @@ Gogole Drive > create spread sheet > tools > script editor > paste main.js > sav
 - the name of the SpreadSheet, and Google Apps Script can be anything
 - onOpen will be called every time you open the SpreadSheet
 
+## sample spreadsheet
+
+```
+pbcopy < sample-sheet.txt
+```
+
+and paste to the spreadsheet
+
+- lines below the line begin with `#` will be ignored by the script
+
+## test run
+
+Custom Menu > check right now
+
 # schedule
 Tools > Script editor... > Resources > Current project's triggers > select healthCheck as a function
 

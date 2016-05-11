@@ -1,0 +1,23 @@
+url	contentType	headers	method	payload	validateHttpsCertificate	expectResponse
+google.com						
+http://google.com/notfound						{ "status": 404 }
+https://google.com	application/json; charset=utf-8		post	{"pseudo":"value"}	FALSE	{ "status": 405 }
+						
+# Custom Menu (next to 'Help')						
+health check list	make sure health check list was parsed					
+check right now	start checking according to the list					
+notification settings	such as Slack webhook url, or kind of					
+help	show helps					
+						
+# properties						
+name	default	description				
+url	(none)	`http://` is not required				
+contentType	`application/x-www-form-urlencoded`	it may be `application/json; charset=utf-8`, or whatever				
+headers	(none)	like `{ "x-my-header": "foobar" }`				
+method	get	it may be `post`, `put`, or `delete`				
+payload	(none)	request body, the format is depend on the contentType				
+validateHttpsCertificate	TRUE	don't try to validate if it's set to false				
+expectResponse	`{ "status": 200 }`	like, `{ "status": 200, "body": "pong" }`				
+						
+# how to setup Slack notification						
+https://slack.com/apps > Build > Make a custom integration > Incoming Webhooks						
