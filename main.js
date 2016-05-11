@@ -153,7 +153,7 @@ function setDestination() {
 }
 
 function showHelp() {
-  alert("no message");
+  alert("https://github.com/kei-sato/gas-health-check");
 }
 
 function sendMessage(message) {
