@@ -5,7 +5,7 @@ Gogole Drive > create spread sheet > tools > script editor > paste main.js > sav
 
 - the name of the spreadsheet, and the google apps script can be whatever you want
 - onOpen will be called every time you open the spreadsheet
-- onOpen creates `Custom Menu`
+- onOpen creates `Custom Menu` in this script
 
 ## sample spreadsheet
 
