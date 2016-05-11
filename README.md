@@ -1,8 +1,8 @@
 # install
 Gogole Drive > create spread sheet > tools > script editor > paste main.js > save > run onOpen
 
-- the name of the SpreadSheet, and Google Apps Script can be anything
-- onOpen will be called every time you open the SpreadSheet
+- the name of the spreadsheet, and the google apps script can be whatever you want
+- onOpen will be called every time you open the spreadsheet
 
 ## sample spreadsheet
 
