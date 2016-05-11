@@ -1,7 +1,7 @@
 url	contentType	headers	method	payload	validateHttpsCertificate	expectResponse
 google.com						
-http://google.com/notfound						{ "status": 404 }
-https://google.com	application/json; charset=utf-8		post	{"pseudo":"value"}	FALSE	{ "status": 405 }
+http://google.com/notfound						
+https://google.com	application/json; charset=utf-8	{ "x-my-header": "foobar" }	post	{"pseudo":"value"}	FALSE	{ "status": 405 }
 						
 # Custom Menu (next to 'Help')						
 health check list	make sure health check list was parsed					
